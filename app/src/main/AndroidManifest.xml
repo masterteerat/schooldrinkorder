@@ -11,7 +11,10 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".splashscreen"
-            android:exported="true">
+            android:label=""
+            android:noHistory="true">
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
