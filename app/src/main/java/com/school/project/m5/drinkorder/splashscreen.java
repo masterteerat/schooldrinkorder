@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.provider.Settings.Secure;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,31 +20,47 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class splashscreen extends AppCompatActivity {
+    private Timer myTimer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
-        String android_id = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
-        checkUser(android_id);
-        new Handler().postDelayed(new Runnable() {
+        myTimer = new Timer();
+        myTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-
-                if (GlobalVar.status == "yes") {
-                    Intent intent = new Intent(splashscreen.this, MainActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(splashscreen.this, Registerscreen.class);
-                    startActivity(intent);
-                }
+                timerCheck();
             }
-        }, 3000);
 
+        }, 500, 500);
 
+        GlobalVar.status = "wait";
+
+        String android_id = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+        checkUser(android_id);
+
+        GlobalVar.userMID = android_id;
 
     }
+
+
+    void timerCheck() {
+        if (!GlobalVar.status.equals("wait")) {
+            if (GlobalVar.status.equals("yes")) {
+                Intent intent = new Intent(splashscreen.this, MainActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(splashscreen.this, Registerscreen.class);
+                startActivity(intent);
+            }
+            myTimer.cancel();
+        }
+    }
+
+
     void checkUser(String DeviceId) {
 
         Retrofit api = new Retrofit.Builder()
