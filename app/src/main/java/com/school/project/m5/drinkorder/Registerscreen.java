@@ -1,5 +1,6 @@
 package com.school.project.m5.drinkorder;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,8 @@ public class Registerscreen extends AppCompatActivity {
                 String Name = etxtName.getText().toString();
                 String Sid = etxtSid.getText().toString();
                 registerUser(GlobalVar.userMID, Sid, Name);
+                Intent intent = new Intent(Registerscreen.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
