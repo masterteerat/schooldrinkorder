@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdk 32
     defaultConfig {
-//        applicationId "masterung.androidthai.in.th.testtablayout"
         applicationId "com.school.project.m5.drinkorder"
         minSdkVersion 17
         targetSdkVersion 27
