@@ -1,5 +1,7 @@
 package com.school.project.m5.drinkorder;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,11 +34,7 @@ public class Registerscreen extends AppCompatActivity {
         btnRet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String Name = etxtName.getText().toString();
-                String Sid = etxtSid.getText().toString();
-                registerUser(GlobalVar.userMID, Sid, Name);
-                Intent intent = new Intent(Registerscreen.this, MainActivity.class);
-                startActivity(intent);
+                showDialog("ยืนยันลงทะเบียน?");
             }
         });
 
@@ -44,6 +42,34 @@ public class Registerscreen extends AppCompatActivity {
 
     }
 
+    public void showDialog(final String inpTxt) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Registerscreen.this);
+
+        builder.setMessage("ลงทะเบียน: " + inpTxt);
+
+        builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which){
+
+                String Name = etxtName.getText().toString();
+                String Sid = etxtSid.getText().toString();
+                registerUser(GlobalVar.userMID, Sid, Name);
+
+                Intent intent = new Intent(Registerscreen.this,splashscreen.class);
+                finish();
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which){
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
 
     void registerUser(String DeviceId, String Sid, String Name) {
 

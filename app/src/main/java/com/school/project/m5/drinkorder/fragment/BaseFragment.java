@@ -56,7 +56,7 @@ public class BaseFragment extends Fragment{
 
     private void createTabLayout() {
         tabLayout = getView().findViewById(R.id.tabLayout);
-        String[] strings = new String[]{"Tab A", "Tab B", "Tab C"};
+        String[] strings = new String[]{"เมนู", "ตระกร้า", "สถานะ"};
         for (int i=0; i<strings.length; i+=1) {
             tabLayout.addTab(tabLayout.newTab().setText(strings[i]));
         }
