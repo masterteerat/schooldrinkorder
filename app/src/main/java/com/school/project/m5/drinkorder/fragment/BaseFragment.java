@@ -9,7 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.school.project.m5.drinkorder.GlobalVar;
 import com.school.project.m5.drinkorder.R;
 import com.school.project.m5.drinkorder.utility.MyPagerAdapter;
 
@@ -17,10 +19,15 @@ public class BaseFragment extends Fragment{
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private TextView txtName;
+    private TextView txtSid;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
+
 
 //        Create TabLayout
         createTabLayout();
@@ -31,6 +38,10 @@ public class BaseFragment extends Fragment{
     }   // Main Method
 
     private void createViewPager() {
+        txtName = getView().findViewById(R.id.txtName);
+        txtSid = getView().findViewById(R.id.txtSid);
+        txtName.setText("ชื่อ: " + GlobalVar.userName);
+        txtSid.setText("รหัสนักเรียน: " + GlobalVar.userSID);
         viewPager = getView().findViewById(R.id.viewPager);
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(
                 getActivity().getSupportFragmentManager(), tabLayout.getTabCount());

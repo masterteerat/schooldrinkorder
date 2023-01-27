@@ -80,6 +80,8 @@ public class splashscreen extends AppCompatActivity {
             public void onResponse(Call<com.school.project.m5.drinkorder.DataUserRet> call, Response<com.school.project.m5.drinkorder.DataUserRet> response) {
                 com.school.project.m5.drinkorder.DataUserRet response1 = response.body();
 
+                GlobalVar.userSID = response1.getSid();
+                GlobalVar.userName = response1.getName();
                 GlobalVar.status = response1.getStatus();
             }
 
