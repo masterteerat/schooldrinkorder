@@ -64,7 +64,9 @@ public class splashscreen extends AppCompatActivity {
     void checkUser(String DeviceId) {
 
         Retrofit api = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.202:8080")
+                /*.baseUrl("http://192.168.1.202:8080")*/
+                .baseUrl("http://temuscave.thddns.net:5355")
+
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

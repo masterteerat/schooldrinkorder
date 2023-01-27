@@ -82,7 +82,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        viewHolder.getTextView().setText(mDataSet[position]);
+        /*viewHolder.getTextView().setText(mDataSet[position]);*/
     }
     // END_INCLUDE(recyclerViewOnBindViewHolder)
 
