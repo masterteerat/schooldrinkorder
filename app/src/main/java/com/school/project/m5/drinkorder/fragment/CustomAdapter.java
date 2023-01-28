@@ -123,12 +123,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         viewHolder.getImgBtnAdd().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog(mDataSet[position].description);
+                showDialog(mDataSet[position].description, position);
             }
         });
     }
     // END_INCLUDE(recyclerViewOnBindViewHolder)
-    public void showDialog(final String inpTxt) {
+    public void showDialog(final String inpTxt, Integer position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
         builder.setMessage( inpTxt + ": เพิ่มสินค้าในตระกร้า?");
@@ -136,6 +136,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which){
+
+                addToCart(mDataSet[position]);
 
                 dialog.dismiss();
             }
@@ -154,4 +156,34 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public int getItemCount() {
         return mDataSet.length;
     }
+
+    public void addToCart(DataProdLine dataprodline) {
+
+        for (int i = 0; i < 10; i++){
+
+            if (GlobalVar.cart[i].prodId.equals("0")) {
+                GlobalVar.cart[i].prodId = dataprodline.prodId;
+                GlobalVar.cart[i].status = dataprodline.status;
+                GlobalVar.cart[i].totalPrice = dataprodline.price;
+                GlobalVar.cart[i].quantity = dataprodline.quantity;
+                GlobalVar.cart[i].price = dataprodline.price;
+                GlobalVar.cart[i].description = dataprodline.description;
+                GlobalVar.cart[i].imgResId = dataprodline.imgResId;
+                GlobalVar.itemCountCart = i + 1;
+                break;
+            }else{
+                if (GlobalVar.cart[i].prodId.equals(dataprodline.prodId)) {
+                    GlobalVar.cart[i].quantity = GlobalVar.cart[i].quantity + 1;
+                    GlobalVar.cart[i].totalPrice = GlobalVar.cart[i].quantity * dataprodline.price;
+                    GlobalVar.itemCountCart = i + 1;
+                    break;
+                }
+
+            }
+
+        }
+    }
+
+
+
 }
