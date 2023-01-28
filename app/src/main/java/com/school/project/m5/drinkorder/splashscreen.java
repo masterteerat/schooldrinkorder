@@ -65,7 +65,7 @@ public class splashscreen extends AppCompatActivity {
 
         Retrofit api = new Retrofit.Builder()
 
-                .baseUrl("http://temuscave.thddns.net:5355")
+                .baseUrl(GlobalVar.Base_Url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
