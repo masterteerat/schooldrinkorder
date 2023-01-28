@@ -47,7 +47,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         private final TextView txtDesc;
         private final TextView txtPrice;
         private final ImageView imgProdPic;
-        private final ImageButton imgbtnAdd;
+        private final ImageButton imgbtnDel;
 
         public ViewHolder(View v) {
             super(v);
@@ -64,7 +64,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             txtDesc = (TextView) v.findViewById(R.id.txtDesc);
             txtPrice = (TextView) v.findViewById(R.id.txtPrice);
             imgProdPic = (ImageView) v.findViewById(R.id.imgProd);
-            imgbtnAdd = (ImageButton) v.findViewById(R.id.btnDelete);
+            imgbtnDel = (ImageButton) v.findViewById(R.id.btnDelete);
         }
 
         public TextView getTxtDesc() {
@@ -79,8 +79,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             return imgProdPic;
         }
 
-        public ImageButton getImgBtnAdd() {
-            return imgbtnAdd;
+        public ImageButton getImgBtnDel() {
+            return imgbtnDel;
         }
 
     }
@@ -118,7 +118,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         viewHolder.getTxtDesc().setText(GlobalVar.cart[position].description);
         viewHolder.getTxtPrice().setText("จำนวน: " + GlobalVar.cart[position].quantity.toString() + " ราคา: " + GlobalVar.cart[position].totalPrice.toString() + " บาท");
         viewHolder.getImgProdPic().setImageResource(GlobalVar.cart[position].imgResId);
-        viewHolder.getImgBtnAdd().setOnClickListener(new View.OnClickListener() {
+        viewHolder.getImgBtnDel().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialog(GlobalVar.cart[position].description, position);
@@ -129,13 +129,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public void showDialog(final String inpTxt, Integer position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
-        builder.setMessage( inpTxt + ": เพิ่มสินค้าในตระกร้า?");
+        builder.setMessage( inpTxt + ": นำสินค้าออกจากตระกร้า?");
 
         builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which){
 
-                addToCart(GlobalVar.cart[position]);
+                DelFromCart(position);
+                upDateCartDataChange();
 
                 dialog.dismiss();
             }
@@ -155,32 +156,24 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         return GlobalVar.itemCountCart;
     }
 
-    public void addToCart(DataProdLine dataprodline) {
+    public void DelFromCart(Integer position) {
 
-        for (int i = 0; i < 10; i++){
-
-            if (GlobalVar.cart[i].prodId.equals("0")) {
-                GlobalVar.cart[i].prodId = dataprodline.prodId;
-                GlobalVar.cart[i].status = dataprodline.status;
-                GlobalVar.cart[i].totalPrice = dataprodline.price;
-                GlobalVar.cart[i].quantity = dataprodline.quantity;
-                GlobalVar.cart[i].price = dataprodline.price;
-                GlobalVar.cart[i].description = dataprodline.description;
-                GlobalVar.cart[i].imgResId = dataprodline.imgResId;
-                GlobalVar.itemCountCart = i + 1;
-                break;
+        for (int i = position; i < 10; i++){
+            if (i != 9) {
+                GlobalVar.cart[i].prodId = GlobalVar.cart[i + 1].prodId;
+                GlobalVar.cart[i].status = GlobalVar.cart[i + 1].status;
+                GlobalVar.cart[i].totalPrice = GlobalVar.cart[i + 1].totalPrice;
+                GlobalVar.cart[i].quantity = GlobalVar.cart[i + 1].quantity;
+                GlobalVar.cart[i].price = GlobalVar.cart[i + 1].price;
+                GlobalVar.cart[i].description = GlobalVar.cart[i + 1].description;
+                GlobalVar.cart[i].imgResId = GlobalVar.cart[i + 1].imgResId;
             }else{
-                if (GlobalVar.cart[i].prodId.equals(dataprodline.prodId)) {
-                    GlobalVar.cart[i].quantity = GlobalVar.cart[i].quantity + 1;
-                    GlobalVar.cart[i].totalPrice = GlobalVar.cart[i].quantity * dataprodline.price;
-                    GlobalVar.itemCountCart = i + 1;
-                    break;
+                GlobalVar.cart[i].prodId = "0";
                 }
-
             }
-
+        GlobalVar.itemCountCart = GlobalVar.itemCountCart - 1;
         }
-    }
+
 
 
 
