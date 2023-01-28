@@ -64,12 +64,10 @@ public class splashscreen extends AppCompatActivity {
     void checkUser(String DeviceId) {
 
         Retrofit api = new Retrofit.Builder()
-                /*.baseUrl("http://192.168.1.202:8080")*/
-                .baseUrl("http://temuscave.thddns.net:5355")
 
+                .baseUrl(GlobalVar.Base_Url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
 
         ApiRequests service = api.create(ApiRequests.class);
         Call<com.school.project.m5.drinkorder.DataUserRet> call = service.postReq(new DataUserReq("checkuser",DeviceId,"none","none"));

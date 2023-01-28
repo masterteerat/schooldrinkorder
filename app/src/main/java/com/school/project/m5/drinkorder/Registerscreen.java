@@ -74,11 +74,10 @@ public class Registerscreen extends AppCompatActivity {
     void registerUser(String DeviceId, String Sid, String Name) {
 
         Retrofit api = new Retrofit.Builder()
-                //.baseUrl("http://192.168.1.202:8080")
-                .baseUrl("http://temuscave.thddns.net:5355")
+
+                .baseUrl(GlobalVar.Base_Url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
 
         ApiRequests service = api.create(ApiRequests.class);
         Call<DataUserRet> call = service.postReq(new DataUserReq("register",DeviceId,Sid,Name));

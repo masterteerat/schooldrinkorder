@@ -3,6 +3,10 @@ package com.school.project.m5.drinkorder;
 import android.app.Application;
 
 public class GlobalVar extends Application {
+/*
+    public static String Base_Url = "http://192.168.1.202:8080";
+*/
+    public static String Base_Url = "http://temuscave.thddns.net:5355";
     public static String userName = "None";
     public static String userSID = "None";
     public static String userMID = "None";
