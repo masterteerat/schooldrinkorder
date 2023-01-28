@@ -19,6 +19,7 @@ import com.school.project.m5.drinkorder.MainActivity;
 import com.school.project.m5.drinkorder.R;
 import com.school.project.m5.drinkorder.Registerscreen;
 import com.school.project.m5.drinkorder.splashscreen;
+import com.school.project.m5.drinkorder.fragment.CartAdapter;
 
 import java.util.Arrays;
 
@@ -136,9 +137,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which){
-
+                
                 addToCart(mDataSet[position]);
-
+                GlobalVar.cartAdapter.upDateCartDataChange();
                 dialog.dismiss();
             }
         });

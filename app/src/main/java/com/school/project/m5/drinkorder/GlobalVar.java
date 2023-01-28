@@ -3,6 +3,8 @@ package com.school.project.m5.drinkorder;
 import android.app.Application;
 import android.content.Context;
 
+import com.school.project.m5.drinkorder.fragment.CartAdapter;
+
 public class GlobalVar extends Application {
 /*
     public static String Base_Url = "http://192.168.1.202:8080";
@@ -19,4 +21,5 @@ public class GlobalVar extends Application {
     public static Integer itemCountCart = 0;
 
     public static Context mainActivityContext;
+    public static CartAdapter cartAdapter;
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.school.project.m5.drinkorder.DataProdLine;
+import com.school.project.m5.drinkorder.GlobalVar;
 import com.school.project.m5.drinkorder.R;
 
 public class TabBFragment extends Fragment {
@@ -19,7 +20,7 @@ public class TabBFragment extends Fragment {
     private static final int DATASET_COUNT = 9;
     protected DataProdLine[] mDataset;
     protected RecyclerView mRecyclerView;
-    protected CustomAdapter mAdapter;
+    protected CartAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected TabBFragment.LayoutManagerType mCurrentLayoutManagerType;
 
@@ -73,9 +74,10 @@ public class TabBFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(scrollPosition);
 
-        mAdapter = new CustomAdapter(mDataset);
+        mAdapter = new CartAdapter();
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
+        GlobalVar.cartAdapter = mAdapter;
         // END_INCLUDE(initializeRecyclerView)
 
         return rootView;
@@ -85,17 +87,17 @@ public class TabBFragment extends Fragment {
      * from a local content provider or remote server.
      */
     private void initDataset() {
-        mDataset = new DataProdLine[9];
 
-        mDataset[0] = new DataProdLine("0000", R.drawable.pd_coke, "โค้ก + น้ำเเข็ง", 1, 25.0, 0.0, "");
-        mDataset[1] = new DataProdLine("0001", R.drawable.pd_coffee, "กาเเฟเย็นปั่น", 1, 35.0, 0.0, "");
-        mDataset[2] = new DataProdLine("0002", R.drawable.pd_coffee2, "กาเเฟเย็น", 1, 30.0, 0.0, "");
-        mDataset[3] = new DataProdLine("0003", R.drawable.pd_bluebery, "บลูเบอร์รีปั่น", 1, 35.0, 0.0, "");
-        mDataset[4] = new DataProdLine("0004", R.drawable.pd_banana, "กล้วยปั่น", 1, 30.0, 0.0, "");
-        mDataset[5] = new DataProdLine("0005", R.drawable.pd_greentea, "ชาเขียวเย็น", 1, 35.0, 0.0, "");
-        mDataset[6] = new DataProdLine("0006", R.drawable.pd_lemonjuice, "น้ำมะนาวเย็น", 1, 30.0, 0.0, "");
-        mDataset[7] = new DataProdLine("0007", R.drawable.pd_melon, "น้ำเมล่อน", 1, 40.0, 0.0, "");
-        mDataset[8] = new DataProdLine("0008", R.drawable.pd_watermelon, "น้ำเเตงโม", 1, 35.0, 0.0, "");
+        GlobalVar.cart[0] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[1] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[2] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[3] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[4] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[5] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[6] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[7] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[8] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[9] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
 
     }
 }

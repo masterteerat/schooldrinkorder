@@ -34,6 +34,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     Context mContext;
 
+
     public void upDateCartDataChange() {
         notifyDataSetChanged();
     }
@@ -86,15 +87,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     // END_INCLUDE(recyclerViewSampleViewHolder)
 
-    /**
-     * Initialize the dataset of the Adapter.
-     *
-     * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
-     */
-    public CartAdapter(DataProdLine[] dataSet) {
+
+    public CartAdapter() {
         super();
         this.mContext = GlobalVar.mainActivityContext;
-        mDataSet = dataSet;
+
     }
 
     // BEGIN_INCLUDE(recyclerViewOnCreateViewHolder)
@@ -118,13 +115,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
 
-        viewHolder.getTxtDesc().setText(mDataSet[position].description);
-        viewHolder.getTxtPrice().setText("ราคา: " + mDataSet[position].price.toString() + " บาท");
-        viewHolder.getImgProdPic().setImageResource(mDataSet[position].imgResId);
+        viewHolder.getTxtDesc().setText(GlobalVar.cart[position].description);
+        viewHolder.getTxtPrice().setText("จำนวน: " + GlobalVar.cart[position].quantity.toString() + " ราคา: " + GlobalVar.cart[position].totalPrice.toString() + " บาท");
+        viewHolder.getImgProdPic().setImageResource(GlobalVar.cart[position].imgResId);
         viewHolder.getImgBtnAdd().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog(mDataSet[position].description, position);
+                showDialog(GlobalVar.cart[position].description, position);
             }
         });
     }
@@ -138,7 +135,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             @Override
             public void onClick(DialogInterface dialog, int which){
 
-                addToCart(mDataSet[position]);
+                addToCart(GlobalVar.cart[position]);
 
                 dialog.dismiss();
             }
@@ -155,7 +152,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataSet.length;
+        return GlobalVar.itemCountCart;
     }
 
     public void addToCart(DataProdLine dataprodline) {
