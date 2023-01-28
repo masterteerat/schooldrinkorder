@@ -5,8 +5,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.school.project.m5.drinkorder.DataProdLine;
 import com.school.project.m5.drinkorder.R;
 
 import java.util.Arrays;
@@ -18,7 +21,7 @@ import java.util.Arrays;
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
     private static final String TAG = "CustomAdapter";
 
-    private static String[] mDataSet;
+    private static DataProdLine[] mDataSet;
 
 
     public void upDateDataChange() {
@@ -30,7 +33,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textView;
+        private final TextView txtDesc;
+        private final TextView txtPrice;
+        private final ImageView imgProdPic;
+        private final ImageButton imgbtnAdd;
 
         public ViewHolder(View v) {
             super(v);
@@ -39,18 +45,35 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Log.d(TAG, "Element " + getAdapterPosition() + " clicked.");
-                    mDataSet = Arrays.copyOf(mDataSet, mDataSet.length + 1);
-                    mDataSet[mDataSet.length - 1] = "add new item";
+                   /* mDataSet = Arrays.copyOf(mDataSet, mDataSet.length + 1);
+                    mDataSet[mDataSet.length - 1] = "add new item";*/
                     upDateDataChange();
                 }
             });
-            textView = (TextView) v.findViewById(R.id.textView);
+            txtDesc = (TextView) v.findViewById(R.id.txtDesc);
+            txtPrice = (TextView) v.findViewById(R.id.txtPrice);
+            imgProdPic = (ImageView) v.findViewById(R.id.imgProd);
+            imgbtnAdd = (ImageButton) v.findViewById(R.id.btnAdd);
         }
 
-        public TextView getTextView() {
-            return textView;
+        public TextView getTxtDesc() {
+            return txtDesc;
         }
+
+        public TextView getTxtPrice() {
+            return txtPrice;
+        }
+
+        public ImageView getImgProdPic() {
+            return imgProdPic;
+        }
+
+        public ImageButton getImgBtnAdd() {
+            return imgbtnAdd;
+        }
+
     }
+
     // END_INCLUDE(recyclerViewSampleViewHolder)
 
     /**
@@ -58,7 +81,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      *
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public CustomAdapter(String[] dataSet) {
+    public CustomAdapter(DataProdLine[] dataSet) {
         mDataSet = dataSet;
     }
 
@@ -82,7 +105,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        /*viewHolder.getTextView().setText(mDataSet[position]);*/
+        viewHolder.getTxtDesc().setText(mDataSet[position].description);
+        viewHolder.getTxtPrice().setText("ราคา: " + mDataSet[position].price.toString() + " บาท");
+        viewHolder.getImgProdPic().setImageResource(mDataSet[position].imgResId);
+
     }
     // END_INCLUDE(recyclerViewOnBindViewHolder)
 

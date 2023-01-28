@@ -11,13 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 
+import com.school.project.m5.drinkorder.DataProdLine;
 import com.school.project.m5.drinkorder.R;
 
 public class TabAFragment extends Fragment {
     private static final String TAG = "RecyclerViewFragmentMenu";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
-    private static final int DATASET_COUNT = 6;
-    protected String[] mDataset;
+    private static final int DATASET_COUNT = 9;
+    protected DataProdLine mDataset[];
     protected RecyclerView mRecyclerView;
     protected CustomAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
@@ -92,9 +93,9 @@ public class TabAFragment extends Fragment {
      * from a local content provider or remote server.
      */
     private void initDataset() {
-        mDataset = new String[DATASET_COUNT];
-        for (int i = 0; i < DATASET_COUNT; i++) {
-            mDataset[i] = "This is element #" + i;
-        }
+        mDataset[0] = new DataProdLine("0000", R.drawable.pd_coke, "โค้ก + น้ำเเข็ง", 1, 25.0, 0.0, "");
+        mDataset[1] = new DataProdLine("0001", R.drawable.pd_coffee, "กาเเฟเย็นปั่น", 1, 35.0, 0.0, "");
+        mDataset[2] = new DataProdLine("0002", R.drawable.pd_coffee2, "กาเเฟเย็น", 1, 30.0, 0.0, "");
+
     }
 }

@@ -75,7 +75,7 @@ public class Registerscreen extends AppCompatActivity {
 
         Retrofit api = new Retrofit.Builder()
 
-                .baseUrl(GlobalVar.Base_Url)
+                .baseUrl("http://temuscave.thddns.net:5355")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
