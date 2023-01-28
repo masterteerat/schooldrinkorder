@@ -1,5 +1,9 @@
 package com.school.project.m5.drinkorder.fragment;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.school.project.m5.drinkorder.DataProdLine;
+import com.school.project.m5.drinkorder.GlobalVar;
+import com.school.project.m5.drinkorder.MainActivity;
 import com.school.project.m5.drinkorder.R;
+import com.school.project.m5.drinkorder.Registerscreen;
+import com.school.project.m5.drinkorder.splashscreen;
 
 import java.util.Arrays;
 
@@ -23,6 +31,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     private static DataProdLine[] mDataSet;
 
+    Context mContext;
 
     public void upDateDataChange() {
         notifyDataSetChanged();
@@ -82,6 +91,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
     public CustomAdapter(DataProdLine[] dataSet) {
+        super();
+        this.mContext = GlobalVar.mainActivityContext;
         mDataSet = dataSet;
     }
 
@@ -105,13 +116,39 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
+
         viewHolder.getTxtDesc().setText(mDataSet[position].description);
         viewHolder.getTxtPrice().setText("ราคา: " + mDataSet[position].price.toString() + " บาท");
         viewHolder.getImgProdPic().setImageResource(mDataSet[position].imgResId);
-
+        viewHolder.getImgBtnAdd().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog(mDataSet[position].description);
+            }
+        });
     }
     // END_INCLUDE(recyclerViewOnBindViewHolder)
+    public void showDialog(final String inpTxt) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
+        builder.setMessage( inpTxt + ": เพิ่มสินค้าในตระกร้า?");
+
+        builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which){
+
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which){
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {

@@ -19,6 +19,6 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
-
+        GlobalVar.mainActivityContext = MainActivity.this;
     }
 }

@@ -1,6 +1,7 @@
 package com.school.project.m5.drinkorder;
 
 import android.app.Application;
+import android.content.Context;
 
 public class GlobalVar extends Application {
 /*
@@ -13,4 +14,6 @@ public class GlobalVar extends Application {
 
     public static String result = "None";
     public static String status = "None";
+
+    public static Context mainActivityContext;
 }
