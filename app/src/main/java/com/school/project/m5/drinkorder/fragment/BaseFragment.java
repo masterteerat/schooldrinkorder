@@ -1,5 +1,8 @@
 package com.school.project.m5.drinkorder.fragment;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.school.project.m5.drinkorder.GlobalVar;
@@ -17,17 +21,16 @@ import com.school.project.m5.drinkorder.utility.MyPagerAdapter;
 
 public class BaseFragment extends Fragment{
 
+    private ImageButton imgBtnSubmit;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TextView txtName;
     private TextView txtSid;
+    Context mContext;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
-
 
 //        Create TabLayout
         createTabLayout();
@@ -42,6 +45,20 @@ public class BaseFragment extends Fragment{
         txtSid = getView().findViewById(R.id.txtSid);
         txtName.setText("ชื่อ: " + GlobalVar.userName);
         txtSid.setText("รหัสนักเรียน: " + GlobalVar.userSID);
+        this.mContext = GlobalVar.mainActivityContext;
+        imgBtnSubmit = getView().findViewById(R.id.imgBtnUpload);
+
+        imgBtnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)  {
+                if (GlobalVar.itemCountCart == 0) {
+                    showWarnDialog();
+                }else {
+                    showConfirmDialog("สั่งเครื่องดื่ม?:");
+                }
+            }
+        });
+
         viewPager = getView().findViewById(R.id.viewPager);
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(
                 getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
@@ -63,6 +80,43 @@ public class BaseFragment extends Fragment{
 
             }
         });
+    }
+
+    public void showConfirmDialog(String intPuttxt) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+        builder.setMessage(intPuttxt + "ยืนยันการสั่งเครื่องดื่ม");
+
+        builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+
+            }
+        });
+
+
+        builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which){
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+    public void showWarnDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+        builder.setMessage("ไม่สามารถสั่งได้: ไม่มีสินค้าในตระกร้าของคุณ");
+
+        builder.setNegativeButton("ตกลง", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which){
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 
     private void createTabLayout() {
