@@ -176,7 +176,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 if (GlobalVar.cart[i].prodId.equals(dataprodline.prodId)) {
                     GlobalVar.cart[i].quantity = GlobalVar.cart[i].quantity + 1;
                     GlobalVar.cart[i].totalPrice = GlobalVar.cart[i].quantity * dataprodline.price;
-                    GlobalVar.itemCountCart = i + 1;
                     break;
                 }
 

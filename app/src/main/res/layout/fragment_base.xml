@@ -63,11 +63,11 @@
                 android:id="@+id/imgBtnUpload"
                 android:layout_width="60dp"
                 android:layout_height="55dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtName"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/stat_sys_upload" />
+                app:srcCompat="@android:drawable/ic_menu_send" />
         </android.support.constraint.ConstraintLayout>
     </FrameLayout>
 
