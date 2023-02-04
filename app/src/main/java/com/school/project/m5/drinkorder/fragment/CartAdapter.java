@@ -36,7 +36,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
 
     public void upDateCartDataChange() {
-        notifyDataSetChanged();
+        this.notifyDataSetChanged();
     }
 
     // BEGIN_INCLUDE(recyclerViewSampleViewHolder)

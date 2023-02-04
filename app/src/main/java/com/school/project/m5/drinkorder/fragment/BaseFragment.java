@@ -8,19 +8,34 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.school.project.m5.drinkorder.ApiRequests;
+import com.school.project.m5.drinkorder.DataOrderReq;
+import com.school.project.m5.drinkorder.DataOrderRet;
 import com.school.project.m5.drinkorder.GlobalVar;
 import com.school.project.m5.drinkorder.R;
 import com.school.project.m5.drinkorder.utility.MyPagerAdapter;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class BaseFragment extends Fragment{
 
+    private Timer myTimer;
     private ImageButton imgBtnSubmit;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -47,6 +62,8 @@ public class BaseFragment extends Fragment{
         txtSid.setText("รหัสนักเรียน: " + GlobalVar.userSID);
         this.mContext = GlobalVar.mainActivityContext;
         imgBtnSubmit = getView().findViewById(R.id.imgBtnUpload);
+
+
 
         imgBtnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +97,20 @@ public class BaseFragment extends Fragment{
 
             }
         });
+
+    }
+
+    public void timerCheck() {
+        if (!GlobalVar.status.equals("wait")) {
+            if (GlobalVar.status.equals("yes")) {
+                initDataset();
+/*
+                GlobalVar.cartAdapter.upDateCartDataChange();
+*/
+            }
+
+            myTimer.cancel();
+        }
     }
 
     public void showConfirmDialog(String intPuttxt) {
@@ -90,7 +121,20 @@ public class BaseFragment extends Fragment{
         builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                myTimer = new Timer();
+                myTimer.schedule(new TimerTask() {
 
+                    @Override
+                    public void run() {
+                        timerCheck();
+                    }
+
+                }, 500, 500);
+
+                GlobalVar.status = "wait";
+
+                orderPord();
+                dialog.dismiss();
 
             }
         });
@@ -119,6 +163,37 @@ public class BaseFragment extends Fragment{
         builder.show();
     }
 
+    void orderPord() {
+
+        Retrofit api = new Retrofit.Builder()
+
+                .baseUrl(GlobalVar.Base_Url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ApiRequests service = api.create(ApiRequests.class);
+        Call<DataOrderRet> call = service.postOrderReq(new DataOrderReq(GlobalVar.userMID, "order", GlobalVar.userName, GlobalVar.cart));
+
+        call.enqueue(new Callback<DataOrderRet>() {
+
+            @Override
+            public void onResponse(Call<com.school.project.m5.drinkorder.DataOrderRet> call, Response<DataOrderRet> response) {
+                com.school.project.m5.drinkorder.DataOrderRet response1 = response.body();
+
+                GlobalVar.status = response1.getStatus();
+
+            }
+
+            @Override
+            public void onFailure(Call<com.school.project.m5.drinkorder.DataOrderRet> call, Throwable t) {
+
+                Log.d("artoy", t.toString());
+
+            }
+        });
+
+    }
+
     private void createTabLayout() {
         tabLayout = getView().findViewById(R.id.tabLayout);
         String[] strings = new String[]{"เมนู", "ตระกร้า", "สถานะ"};
@@ -135,5 +210,21 @@ public class BaseFragment extends Fragment{
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base, container, false);
         return view;
+    }
+
+    private void initDataset() {
+
+        GlobalVar.itemCountCart = 0;
+        GlobalVar.cart[0].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
+        GlobalVar.cart[1].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
+        GlobalVar.cart[2].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
+        GlobalVar.cart[3].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
+        GlobalVar.cart[4].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
+        GlobalVar.cart[5].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
+        GlobalVar.cart[6].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
+        GlobalVar.cart[7].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
+        GlobalVar.cart[8].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
+        GlobalVar.cart[9].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
+
     }
 }
