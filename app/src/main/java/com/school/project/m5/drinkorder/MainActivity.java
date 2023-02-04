@@ -1,7 +1,9 @@
 package com.school.project.m5.drinkorder;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.window.SplashScreen;
 
 import com.school.project.m5.drinkorder.fragment.BaseFragment;
 
@@ -22,6 +24,14 @@ public class MainActivity extends AppCompatActivity {
         GlobalVar.mainActivityContext = MainActivity.this;
         initDataCart();
     }
+
+    /*@Override
+    protected void onResume() {
+        Intent intent = new Intent(MainActivity.this, splashscreen.class);
+        finish();
+        MainActivity.this.startActivity(intent);
+        super.onResume();
+    }*/
 
     private void initDataCart() {
 

@@ -88,16 +88,16 @@ public class TabBFragment extends Fragment {
      */
     private void initDataset() {
 
-        GlobalVar.cart[0] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.cart[1] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.cart[2] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.cart[3] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.cart[4] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.cart[5] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.cart[6] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.cart[7] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.cart[8] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.cart[9] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[0].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[1].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[2].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[3].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[4].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[5].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[6].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[7].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[8].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.cart[9].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
 
     }
 }
