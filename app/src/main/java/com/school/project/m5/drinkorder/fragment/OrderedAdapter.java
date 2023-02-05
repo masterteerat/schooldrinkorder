@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ public class OrderedAdapter extends RecyclerView.Adapter<OrderedAdapter.ViewHold
     Context mContext;
 
 
-    public void upDateCartDataChange() {
+    public void upDateOrderedDataChange() {
         this.notifyDataSetChanged();
     }
 
@@ -47,8 +48,7 @@ public class OrderedAdapter extends RecyclerView.Adapter<OrderedAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView txtDesc;
         private final TextView txtPrice;
-        private final ImageView imgProdPic;
-        private final ImageButton imgbtnDel;
+        private final TextView txtStatus;
 
         public ViewHolder(View v) {
             super(v);
@@ -61,8 +61,8 @@ public class OrderedAdapter extends RecyclerView.Adapter<OrderedAdapter.ViewHold
             });
             txtDesc = (TextView) v.findViewById(R.id.txtDesc);
             txtPrice = (TextView) v.findViewById(R.id.txtPrice);
-            imgProdPic = (ImageView) v.findViewById(R.id.imgProd);
-            imgbtnDel = (ImageButton) v.findViewById(R.id.btnDelete);
+            txtStatus = (TextView) v.findViewById(R.id.txtStatus);
+
         }
 
         public TextView getTxtDesc() {
@@ -73,13 +73,8 @@ public class OrderedAdapter extends RecyclerView.Adapter<OrderedAdapter.ViewHold
             return txtPrice;
         }
 
-        public ImageView getImgProdPic() {
-            return imgProdPic;
-        }
+        public TextView getTxtStatus() { return txtStatus;}
 
-        public ImageButton getImgBtnDel() {
-            return imgbtnDel;
-        }
 
     }
 
@@ -115,7 +110,18 @@ public class OrderedAdapter extends RecyclerView.Adapter<OrderedAdapter.ViewHold
 
         viewHolder.getTxtDesc().setText(GlobalVar.ordered[position].description);
         viewHolder.getTxtPrice().setText("จำนวน: " + GlobalVar.ordered[position].quantity.toString() + " ราคา: " + GlobalVar.ordered[position].totalPrice.toString() + " บาท");
-        viewHolder.getImgProdPic().setImageResource(GlobalVar.ordered[position].imgResId);
+        if (GlobalVar.ordered[position].status.equals("enqueue")) {
+            viewHolder.getTxtStatus().setText("สถานะ: กำลังเตรียม");
+            viewHolder.getTxtStatus().setTextColor(Color.BLUE);
+        }
+        else if (GlobalVar.ordered[position].status.equals("ready")) {
+            viewHolder.getTxtStatus().setText("สถานะ: พร้อมเสิร์ฟ");
+            viewHolder.getTxtStatus().setTextColor(Color.GREEN);
+        } else {
+            viewHolder.getTxtStatus().setText("สถานะ: ไม่ระบุ");
+            viewHolder.getTxtStatus().setTextColor(Color.DKGRAY);
+        }
+
 
     }
 
