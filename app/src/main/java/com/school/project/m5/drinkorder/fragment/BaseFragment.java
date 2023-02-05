@@ -85,6 +85,9 @@ public class BaseFragment extends Fragment{
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition()==1) {
+                    GlobalVar.cartAdapter.upDateCartDataChange();
+                }
             }
 
             @Override
@@ -94,22 +97,24 @@ public class BaseFragment extends Fragment{
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                if (tab.getPosition()==1) {
+                    GlobalVar.cartAdapter.upDateCartDataChange();
+                }
             }
         });
 
     }
 
     public void timerCheck() {
+
         if (!GlobalVar.status.equals("wait")) {
             if (GlobalVar.status.equals("yes")) {
                 initDataset();
-/*
-                GlobalVar.cartAdapter.upDateCartDataChange();
-*/
+
             }
 
             myTimer.cancel();
+
         }
     }
 
@@ -119,6 +124,7 @@ public class BaseFragment extends Fragment{
         builder.setMessage(intPuttxt + "ยืนยันการสั่งเครื่องดื่ม");
 
         builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 myTimer = new Timer();
@@ -135,7 +141,7 @@ public class BaseFragment extends Fragment{
 
                 orderPord();
                 dialog.dismiss();
-
+                tabLayout.getTabAt(0).select();
             }
         });
 

@@ -15,7 +15,7 @@ import com.school.project.m5.drinkorder.GlobalVar;
 import com.school.project.m5.drinkorder.R;
 
 public class TabBFragment extends Fragment {
-    private static final String TAG = "RecyclerViewFragmentMenu";
+    private static final String TAG = "RecyclerViewFragmentCart";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int DATASET_COUNT = 9;
     protected DataProdLine[] mDataset;
