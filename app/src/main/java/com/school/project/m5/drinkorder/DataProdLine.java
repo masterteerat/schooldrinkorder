@@ -9,6 +9,7 @@ public class DataProdLine {
     public Double price;
     public Double totalPrice;
     public String status;
+    public String recId;
 
     public DataProdLine() {
 
@@ -22,6 +23,7 @@ public class DataProdLine {
         this.price = price;
         this.totalPrice = totalPrice;
         this.status = status;
+        this.recId = "";
     }
 
     public void updateDataProdLine(String prodId, int imgResId, String description, Integer quantity, Double price, Double totalPrice, String status) {
@@ -32,5 +34,6 @@ public class DataProdLine {
         this.price = price;
         this.totalPrice = totalPrice;
         this.status = status;
+        this.recId = "";
     }
 }

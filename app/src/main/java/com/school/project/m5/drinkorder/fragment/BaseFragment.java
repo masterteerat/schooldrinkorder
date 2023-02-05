@@ -20,6 +20,8 @@ import android.widget.TextView;
 import com.school.project.m5.drinkorder.ApiRequests;
 import com.school.project.m5.drinkorder.DataOrderReq;
 import com.school.project.m5.drinkorder.DataOrderRet;
+import com.school.project.m5.drinkorder.DataStatusReq;
+import com.school.project.m5.drinkorder.DataStatusRet;
 import com.school.project.m5.drinkorder.GlobalVar;
 import com.school.project.m5.drinkorder.R;
 import com.school.project.m5.drinkorder.utility.MyPagerAdapter;
@@ -36,11 +38,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BaseFragment extends Fragment{
 
     private Timer myTimer;
+    private Timer statusCheckTimer;
+    private Timer statusGetTimer;
     private ImageButton imgBtnSubmit;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TextView txtName;
     private TextView txtSid;
+    private Integer Idex;
     Context mContext;
 
     @Override
@@ -63,7 +68,15 @@ public class BaseFragment extends Fragment{
         this.mContext = GlobalVar.mainActivityContext;
         imgBtnSubmit = getView().findViewById(R.id.imgBtnUpload);
 
+        statusCheckTimer = new Timer();
+        statusCheckTimer.schedule(new TimerTask() {
 
+            @Override
+            public void run() {
+                timerCheckStatus();
+            }
+
+        }, 500, 5000);
 
         imgBtnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +101,9 @@ public class BaseFragment extends Fragment{
                 if (tab.getPosition()==1) {
                     GlobalVar.cartAdapter.upDateCartDataChange();
                 }
+                else if (tab.getPosition()==2) {
+                    GlobalVar.orderedAdapter.upDateOrderedDataChange();
+                }
             }
 
             @Override
@@ -100,9 +116,45 @@ public class BaseFragment extends Fragment{
                 if (tab.getPosition()==1) {
                     GlobalVar.cartAdapter.upDateCartDataChange();
                 }
+                else if (tab.getPosition()==2) {
+                    GlobalVar.orderedAdapter.upDateOrderedDataChange();
+                }
             }
         });
 
+    }
+
+    public void timerCheckStatus() {
+        Idex = 0;
+        GlobalVar.result = "stop";
+        statusGetTimer = new Timer();
+        statusGetTimer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                timerGetStatus();
+            }
+
+        }, 0, 100);
+    }
+
+    public void timerGetStatus() {
+        if (GlobalVar.result.equals("stop")) {
+            GlobalVar.result = "wait";
+            statusGet(Idex);
+        }
+        else if (GlobalVar.result.equals("yes")) {
+            Idex = Idex + 1;
+            if (Idex < GlobalVar.ordered.length) {
+                GlobalVar.result = "wait";
+                statusGet(Idex);
+            } else {
+                statusGetTimer.cancel();
+            }
+        }
+        else if (GlobalVar.result.equals("no")) {
+            statusGetTimer.cancel();
+        }
     }
 
     public void timerCheck() {
@@ -192,6 +244,44 @@ public class BaseFragment extends Fragment{
 
             @Override
             public void onFailure(Call<com.school.project.m5.drinkorder.DataOrderRet> call, Throwable t) {
+
+                Log.d("artoy", t.toString());
+
+            }
+        });
+
+    }
+
+    void statusGet(Integer Id) {
+
+        Retrofit api = new Retrofit.Builder()
+
+                .baseUrl(GlobalVar.Base_Url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ApiRequests service = api.create(ApiRequests.class);
+        Call<DataStatusRet> call = service.postStatusReq(new DataStatusReq("checkorder", GlobalVar.userMID, Id));
+
+        call.enqueue(new Callback<DataStatusRet>() {
+
+            @Override
+            public void onResponse(Call<com.school.project.m5.drinkorder.DataStatusRet> call, Response<DataStatusRet> response) {
+                com.school.project.m5.drinkorder.DataStatusRet response1 = response.body();
+
+                GlobalVar.result = response1.getStatus();
+                GlobalVar.ordered[Id].prodId = response1.getProdId();
+                GlobalVar.ordered[Id].recId = response1.getRecId();
+                GlobalVar.ordered[Id].description = response1.getDescription();
+                GlobalVar.ordered[Id].imgResId = response1.getImgResId();
+                GlobalVar.ordered[Id].totalPrice = response1.getTotalPrice();
+                GlobalVar.ordered[Id].status = response1.getProdStatus();
+                GlobalVar.ordered[Id].quantity = response1.getQuantity();
+                GlobalVar.itemCountOrdered = Id+1;
+            }
+
+            @Override
+            public void onFailure(Call<com.school.project.m5.drinkorder.DataStatusRet> call, Throwable t) {
 
                 Log.d("artoy", t.toString());
 

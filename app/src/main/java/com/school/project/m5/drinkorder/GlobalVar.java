@@ -21,7 +21,7 @@ public class GlobalVar extends Application {
     public static DataProdLine[] cart = new DataProdLine[10];
     public static Integer itemCountCart = 0;
 
-    public static DataProdLine[] ordered = new DataProdLine[10];
+    public static DataProdLine[] ordered = new DataProdLine[20];
     public static Integer itemCountOrdered = 0;
 
     public static Context mainActivityContext;
