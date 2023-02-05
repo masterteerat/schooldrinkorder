@@ -102,7 +102,7 @@ public class BaseFragment extends Fragment{
                     GlobalVar.cartAdapter.upDateCartDataChange();
                 }
                 else if (tab.getPosition()==2) {
-                    GlobalVar.orderedAdapter.upDateOrderedDataChange();
+                    /*GlobalVar.orderedAdapter.upDateOrderedDataChange();*/
                 }
             }
 
@@ -117,7 +117,7 @@ public class BaseFragment extends Fragment{
                     GlobalVar.cartAdapter.upDateCartDataChange();
                 }
                 else if (tab.getPosition()==2) {
-                    GlobalVar.orderedAdapter.upDateOrderedDataChange();
+                    /*GlobalVar.orderedAdapter.upDateOrderedDataChange();*/
                 }
             }
         });
@@ -135,7 +135,7 @@ public class BaseFragment extends Fragment{
                 timerGetStatus();
             }
 
-        }, 0, 100);
+        }, 100, 100);
     }
 
     public void timerGetStatus() {
@@ -270,14 +270,16 @@ public class BaseFragment extends Fragment{
                 com.school.project.m5.drinkorder.DataStatusRet response1 = response.body();
 
                 GlobalVar.result = response1.getStatus();
-                GlobalVar.ordered[Id].prodId = response1.getProdId();
-                GlobalVar.ordered[Id].recId = response1.getRecId();
-                GlobalVar.ordered[Id].description = response1.getDescription();
-                GlobalVar.ordered[Id].imgResId = response1.getImgResId();
-                GlobalVar.ordered[Id].totalPrice = response1.getTotalPrice();
-                GlobalVar.ordered[Id].status = response1.getProdStatus();
-                GlobalVar.ordered[Id].quantity = response1.getQuantity();
-                GlobalVar.itemCountOrdered = Id+1;
+                if (GlobalVar.result.equals("yes")) {
+                    GlobalVar.ordered[Id].prodId = response1.getProdId();
+                    GlobalVar.ordered[Id].recId = response1.getRecId();
+                    GlobalVar.ordered[Id].description = response1.getDescription();
+                    GlobalVar.ordered[Id].imgResId = response1.getImgResId();
+                    GlobalVar.ordered[Id].totalPrice = response1.getTotalPrice();
+                    GlobalVar.ordered[Id].status = response1.getProdStatus();
+                    GlobalVar.ordered[Id].quantity = response1.getQuantity();
+                    GlobalVar.itemCountOrdered = Id+1;
+                }
             }
 
             @Override
