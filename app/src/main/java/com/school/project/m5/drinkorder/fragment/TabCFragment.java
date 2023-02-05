@@ -83,17 +83,10 @@ public class TabCFragment extends Fragment {
     }
 
     private void initDataset() {
-
-        GlobalVar.ordered[0].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
-        GlobalVar.ordered[1].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
-        GlobalVar.ordered[2].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
-        GlobalVar.ordered[3].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
-        GlobalVar.ordered[4].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
-        GlobalVar.ordered[5].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
-        GlobalVar.ordered[6].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
-        GlobalVar.ordered[7].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
-        GlobalVar.ordered[8].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
-        GlobalVar.ordered[9].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
+        GlobalVar.itemCountOrdered = 0;
+        for (int i = 0; i < GlobalVar.ordered.length; i++) {
+            GlobalVar.ordered[i].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
+        }
 
     }
 }

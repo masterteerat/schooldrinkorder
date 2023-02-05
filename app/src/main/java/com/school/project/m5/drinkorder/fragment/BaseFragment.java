@@ -76,7 +76,7 @@ public class BaseFragment extends Fragment{
                 timerCheckStatus();
             }
 
-        }, 500, 5000);
+        }, 500, 10000);
 
         imgBtnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +102,7 @@ public class BaseFragment extends Fragment{
                     GlobalVar.cartAdapter.upDateCartDataChange();
                 }
                 else if (tab.getPosition()==2) {
-                    /*GlobalVar.orderedAdapter.upDateOrderedDataChange();*/
+                    GlobalVar.orderedAdapter.upDateOrderedDataChange();
                 }
             }
 
@@ -117,7 +117,7 @@ public class BaseFragment extends Fragment{
                     GlobalVar.cartAdapter.upDateCartDataChange();
                 }
                 else if (tab.getPosition()==2) {
-                    /*GlobalVar.orderedAdapter.upDateOrderedDataChange();*/
+                    GlobalVar.orderedAdapter.upDateOrderedDataChange();
                 }
             }
         });
@@ -135,7 +135,7 @@ public class BaseFragment extends Fragment{
                 timerGetStatus();
             }
 
-        }, 100, 100);
+        }, 100, 500);
     }
 
     public void timerGetStatus() {

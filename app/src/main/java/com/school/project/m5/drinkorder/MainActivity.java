@@ -50,17 +50,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDataOrder() {
-
-        GlobalVar.ordered[0] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.ordered[1] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.ordered[2] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.ordered[3] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.ordered[4] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.ordered[5] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.ordered[6] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.ordered[7] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.ordered[8] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-        GlobalVar.ordered[9] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
-
+        for (int i = 0; i < GlobalVar.ordered.length; i++) {
+            GlobalVar.ordered[i] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        }
     }
 }

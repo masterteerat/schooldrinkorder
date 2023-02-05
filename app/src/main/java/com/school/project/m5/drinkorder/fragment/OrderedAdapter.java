@@ -49,6 +49,7 @@ public class OrderedAdapter extends RecyclerView.Adapter<OrderedAdapter.ViewHold
         private final TextView txtDesc;
         private final TextView txtPrice;
         private final TextView txtStatus;
+        private final ImageView imgProdPic;
 
         public ViewHolder(View v) {
             super(v);
@@ -62,6 +63,7 @@ public class OrderedAdapter extends RecyclerView.Adapter<OrderedAdapter.ViewHold
             txtDesc = (TextView) v.findViewById(R.id.txtDesc);
             txtPrice = (TextView) v.findViewById(R.id.txtPrice);
             txtStatus = (TextView) v.findViewById(R.id.txtStatus);
+            imgProdPic = (ImageView) v.findViewById(R.id.imgProd);
 
         }
 
@@ -74,6 +76,10 @@ public class OrderedAdapter extends RecyclerView.Adapter<OrderedAdapter.ViewHold
         }
 
         public TextView getTxtStatus() { return txtStatus;}
+
+        public ImageView getImgProdPic() {
+            return imgProdPic;
+        }
 
 
     }
@@ -110,6 +116,7 @@ public class OrderedAdapter extends RecyclerView.Adapter<OrderedAdapter.ViewHold
 
         viewHolder.getTxtDesc().setText(GlobalVar.ordered[position].description);
         viewHolder.getTxtPrice().setText("จำนวน: " + GlobalVar.ordered[position].quantity.toString() + " ราคา: " + GlobalVar.ordered[position].totalPrice.toString() + " บาท");
+        viewHolder.getImgProdPic().setImageResource(GlobalVar.ordered[position].imgResId);
         if (GlobalVar.ordered[position].status.equals("enqueue")) {
             viewHolder.getTxtStatus().setText("สถานะ: กำลังเตรียม");
             viewHolder.getTxtStatus().setTextColor(Color.BLUE);
