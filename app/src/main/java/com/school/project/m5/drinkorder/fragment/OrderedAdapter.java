@@ -27,8 +27,8 @@ import java.util.Arrays;
 /**
  * Provide views to RecyclerView with data from mDataSet.
  */
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
-    private static final String TAG = "CartAdapter";
+public class OrderedAdapter extends RecyclerView.Adapter<OrderedAdapter.ViewHolder> {
+    private static final String TAG = "OrderedAdapter";
 
     private static DataProdLine[] mDataSet;
 
@@ -40,6 +40,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
     // BEGIN_INCLUDE(recyclerViewSampleViewHolder)
+
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
@@ -85,7 +86,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     // END_INCLUDE(recyclerViewSampleViewHolder)
 
 
-    public CartAdapter() {
+    public OrderedAdapter() {
         super();
         this.mContext = GlobalVar.mainActivityContext;
 
@@ -97,7 +98,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.row_item_cart, viewGroup, false);
+                .inflate(R.layout.row_item_ordered, viewGroup, false);
 
         return new ViewHolder(v);
     }
@@ -112,66 +113,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
 
-        viewHolder.getTxtDesc().setText(GlobalVar.cart[position].description);
-        viewHolder.getTxtPrice().setText("จำนวน: " + GlobalVar.cart[position].quantity.toString() + " ราคา: " + GlobalVar.cart[position].totalPrice.toString() + " บาท");
-        viewHolder.getImgProdPic().setImageResource(GlobalVar.cart[position].imgResId);
-        viewHolder.getImgBtnDel().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog(GlobalVar.cart[position].description, position);
-            }
-        });
+        viewHolder.getTxtDesc().setText(GlobalVar.ordered[position].description);
+        viewHolder.getTxtPrice().setText("จำนวน: " + GlobalVar.ordered[position].quantity.toString() + " ราคา: " + GlobalVar.ordered[position].totalPrice.toString() + " บาท");
+        viewHolder.getImgProdPic().setImageResource(GlobalVar.ordered[position].imgResId);
+
     }
-    // END_INCLUDE(recyclerViewOnBindViewHolder)
-    public void showDialog(final String inpTxt, Integer position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
-        builder.setMessage( inpTxt + ": นำสินค้าออกจากตระกร้า?");
 
-        builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface dialog, int which){
 
-                DelFromCart(position);
-                upDateCartDataChange();
 
-                dialog.dismiss();
-            }
-        });
-
-        builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface dialog, int which){
-                dialog.dismiss();
-            }
-        });
-        builder.show();
-    }
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return GlobalVar.itemCountCart;
+        return GlobalVar.itemCountOrdered;
     }
-
-    public void DelFromCart(Integer position) {
-
-        for (int i = position; i < 10; i++){
-            if (i != 9) {
-                GlobalVar.cart[i].prodId = GlobalVar.cart[i + 1].prodId;
-                GlobalVar.cart[i].status = GlobalVar.cart[i + 1].status;
-                GlobalVar.cart[i].totalPrice = GlobalVar.cart[i + 1].totalPrice;
-                GlobalVar.cart[i].quantity = GlobalVar.cart[i + 1].quantity;
-                GlobalVar.cart[i].price = GlobalVar.cart[i + 1].price;
-                GlobalVar.cart[i].description = GlobalVar.cart[i + 1].description;
-                GlobalVar.cart[i].imgResId = GlobalVar.cart[i + 1].imgResId;
-            }else{
-                GlobalVar.cart[i].prodId = "0";
-                }
-            }
-        GlobalVar.itemCountCart = GlobalVar.itemCountCart - 1;
-        }
-
-
 
 
 }

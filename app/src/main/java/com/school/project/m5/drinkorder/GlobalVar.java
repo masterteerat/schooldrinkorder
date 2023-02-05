@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.school.project.m5.drinkorder.fragment.CartAdapter;
+import com.school.project.m5.drinkorder.fragment.OrderedAdapter;
 
 public class GlobalVar extends Application {
 
@@ -20,6 +21,10 @@ public class GlobalVar extends Application {
     public static DataProdLine[] cart = new DataProdLine[10];
     public static Integer itemCountCart = 0;
 
+    public static DataProdLine[] ordered = new DataProdLine[10];
+    public static Integer itemCountOrdered = 0;
+
     public static Context mainActivityContext;
     public static CartAdapter cartAdapter;
+    public static OrderedAdapter orderedAdapter;
 }

@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         GlobalVar.mainActivityContext = MainActivity.this;
         initDataCart();
+        initDataOrder();
     }
 
     /*@Override
@@ -45,6 +46,21 @@ public class MainActivity extends AppCompatActivity {
         GlobalVar.cart[7] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
         GlobalVar.cart[8] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
         GlobalVar.cart[9] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+
+    }
+
+    private void initDataOrder() {
+
+        GlobalVar.ordered[0] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.ordered[1] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.ordered[2] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.ordered[3] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.ordered[4] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.ordered[5] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.ordered[6] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.ordered[7] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.ordered[8] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
+        GlobalVar.ordered[9] = new DataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "");
 
     }
 }
