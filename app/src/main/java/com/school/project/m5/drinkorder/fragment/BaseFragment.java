@@ -76,7 +76,7 @@ public class BaseFragment extends Fragment{
                 timerCheckStatus();
             }
 
-        }, 500, 5000);
+        }, 500, 10000);
 
         imgBtnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
