@@ -84,6 +84,7 @@ public class TabCFragment extends Fragment {
 
     private void initDataset() {
         GlobalVar.itemCountOrdered = 0;
+        GlobalVar.itemCountOrderedBuf = 0;
         for (int i = 0; i < GlobalVar.ordered.length; i++) {
             GlobalVar.ordered[i].updateDataProdLine("0", R.drawable.school_logo, "", 0, 0.0, 0.0, "enqueue");
         }

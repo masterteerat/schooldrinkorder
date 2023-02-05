@@ -76,7 +76,7 @@ public class BaseFragment extends Fragment{
                 timerCheckStatus();
             }
 
-        }, 500, 10000);
+        }, 500, 5000);
 
         imgBtnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +135,7 @@ public class BaseFragment extends Fragment{
                 timerGetStatus();
             }
 
-        }, 100, 500);
+        }, 100, 100);
     }
 
     public void timerGetStatus() {
@@ -149,10 +149,12 @@ public class BaseFragment extends Fragment{
                 GlobalVar.result = "wait";
                 statusGet(Idex);
             } else {
+                GlobalVar.itemCountOrdered = GlobalVar.itemCountOrderedBuf;
                 statusGetTimer.cancel();
             }
         }
         else if (GlobalVar.result.equals("no")) {
+            GlobalVar.itemCountOrdered = GlobalVar.itemCountOrderedBuf;
             statusGetTimer.cancel();
         }
     }
@@ -278,7 +280,7 @@ public class BaseFragment extends Fragment{
                     GlobalVar.ordered[Id].totalPrice = response1.getTotalPrice();
                     GlobalVar.ordered[Id].status = response1.getProdStatus();
                     GlobalVar.ordered[Id].quantity = response1.getQuantity();
-                    GlobalVar.itemCountOrdered = Id+1;
+                    GlobalVar.itemCountOrderedBuf = Id+1;
                 }
             }
 

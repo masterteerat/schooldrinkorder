@@ -23,6 +23,7 @@ public class GlobalVar extends Application {
 
     public static DataProdLine[] ordered = new DataProdLine[10];
     public static Integer itemCountOrdered = 0;
+    public static Integer itemCountOrderedBuf = 0;
 
     public static Context mainActivityContext;
     public static CartAdapter cartAdapter;
