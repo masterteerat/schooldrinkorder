@@ -19,4 +19,8 @@ public interface ApiRequests {
     @Headers("Content-Type: application/json")
     @POST("/api")
     Call<DataStatusRet> postStatusReq(@Body DataStatusReq statusData);
+
+    @Headers("Content-Type: application/json")
+    @POST("/api")
+    Call<DataStatusAllRet> postStatusAllReq(@Body DataStatusReq statusData);
 }

@@ -4,11 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,9 +21,11 @@ import android.widget.TextView;
 import com.school.project.m5.drinkorder.ApiRequests;
 import com.school.project.m5.drinkorder.DataOrderReq;
 import com.school.project.m5.drinkorder.DataOrderRet;
+import com.school.project.m5.drinkorder.DataStatusAllRet;
 import com.school.project.m5.drinkorder.DataStatusReq;
 import com.school.project.m5.drinkorder.DataStatusRet;
 import com.school.project.m5.drinkorder.GlobalVar;
+import com.school.project.m5.drinkorder.MainActivity;
 import com.school.project.m5.drinkorder.R;
 import com.school.project.m5.drinkorder.utility.MyPagerAdapter;
 
@@ -39,6 +42,7 @@ public class BaseFragment extends Fragment{
 
     private Timer myTimer;
     private Timer statusCheckTimer;
+    private Timer statusCheckAllTimer;
     private Timer statusGetTimer;
     private ImageButton imgBtnSubmit;
     private TabLayout tabLayout;
@@ -47,6 +51,7 @@ public class BaseFragment extends Fragment{
     private TextView txtSid;
     private Integer Idex;
     Context mContext;
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -76,7 +81,7 @@ public class BaseFragment extends Fragment{
                 timerCheckStatus();
             }
 
-        }, 500, 10000);
+        }, 500, 3000);
 
         imgBtnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +130,42 @@ public class BaseFragment extends Fragment{
     }
 
     public void timerCheckStatus() {
+        statusCheckAllTimer = new Timer();
+        statusCheckAllTimer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                timerCheckAll();
+            }
+
+        }, 500, 100);
+        GlobalVar.result = "wait";
+        statusGetAll();
+    }
+
+    public void timerCheckAll() {
+
+        if (!GlobalVar.result.equals("wait")) {
+            if (GlobalVar.result.equals("yes")) {
+                GlobalVar.itemCountOrdered = GlobalVar.itemCountOrderedBuf;
+/*                if (GlobalVar.orderedAdapter != null) {
+                    tabLayout.getTabAt(2).select();
+                }*/
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (GlobalVar.orderedAdapter != null) {
+                            GlobalVar.orderedAdapter.upDateOrderedDataChange();
+                        }
+                    }});
+            }
+            statusCheckAllTimer.cancel();
+        }
+    }
+
+    public void _timerCheckStatus() {
         Idex = 0;
+        GlobalVar.itemCountOrderedBuf=0;
         GlobalVar.result = "stop";
         statusGetTimer = new Timer();
         statusGetTimer.schedule(new TimerTask() {
@@ -135,7 +175,7 @@ public class BaseFragment extends Fragment{
                 timerGetStatus();
             }
 
-        }, 100, 100);
+        }, 500, 100);
     }
 
     public void timerGetStatus() {
@@ -149,12 +189,15 @@ public class BaseFragment extends Fragment{
                 GlobalVar.result = "wait";
                 statusGet(Idex);
             } else {
-                GlobalVar.itemCountOrdered = GlobalVar.itemCountOrderedBuf;
+                GlobalVar.itemCountOrdered = GlobalVar.ordered.length;
                 statusGetTimer.cancel();
             }
         }
-        else if (GlobalVar.result.equals("no")) {
+        else if (GlobalVar.result.equals("end")) {
             GlobalVar.itemCountOrdered = GlobalVar.itemCountOrderedBuf;
+            statusGetTimer.cancel();
+        }
+        else if (GlobalVar.result.equals("no")) {
             statusGetTimer.cancel();
         }
     }
@@ -164,7 +207,6 @@ public class BaseFragment extends Fragment{
         if (!GlobalVar.status.equals("wait")) {
             if (GlobalVar.status.equals("yes")) {
                 initDataset();
-
             }
 
             myTimer.cancel();
@@ -286,6 +328,39 @@ public class BaseFragment extends Fragment{
 
             @Override
             public void onFailure(Call<com.school.project.m5.drinkorder.DataStatusRet> call, Throwable t) {
+
+                Log.d("artoy", t.toString());
+
+            }
+        });
+
+    }
+
+    void statusGetAll() {
+
+        Retrofit api = new Retrofit.Builder()
+
+                .baseUrl(GlobalVar.Base_Url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ApiRequests service = api.create(ApiRequests.class);
+        Call<DataStatusAllRet> call = service.postStatusAllReq(new DataStatusReq("checkorderall", GlobalVar.userMID, 0));
+
+        call.enqueue(new Callback<DataStatusAllRet>() {
+
+            @Override
+            public void onResponse(Call<com.school.project.m5.drinkorder.DataStatusAllRet> call, Response<DataStatusAllRet> response) {
+                com.school.project.m5.drinkorder.DataStatusAllRet response1 = response.body();
+
+                GlobalVar.result = response1.getStatus();
+                if (GlobalVar.result.equals("yes")) {
+                    GlobalVar.itemCountOrderedBuf = response1.getResponse(GlobalVar.ordered);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.school.project.m5.drinkorder.DataStatusAllRet> call, Throwable t) {
 
                 Log.d("artoy", t.toString());
 

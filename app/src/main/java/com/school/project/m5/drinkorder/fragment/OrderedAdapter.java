@@ -37,6 +37,7 @@ public class OrderedAdapter extends RecyclerView.Adapter<OrderedAdapter.ViewHold
 
 
     public void upDateOrderedDataChange() {
+
         this.notifyDataSetChanged();
     }
 

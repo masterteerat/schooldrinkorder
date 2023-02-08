@@ -15,6 +15,7 @@ import com.school.project.m5.drinkorder.DataProdLine;
 import com.school.project.m5.drinkorder.GlobalVar;
 import com.school.project.m5.drinkorder.R;
 
+
 public class TabCFragment extends Fragment {
     private static final String TAG = "RecyclerViewFragmentOrdered";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
@@ -37,6 +38,12 @@ public class TabCFragment extends Fragment {
         // Initialize dataset, this data would usually come from a local content provider or
         // remote server.
        /* initDataset();*/
+    }
+
+    @Override
+  public void onDestroyView() {
+        super.onDestroyView();
+        GlobalVar.orderedAdapter = null;
     }
 
 
